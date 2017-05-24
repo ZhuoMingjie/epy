@@ -15,6 +15,12 @@
 		18AF6C891ED5D949005B33CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6C871ED5D949005B33CD /* LaunchScreen.storyboard */; };
 		18AF6C941ED5D949005B33CD /* epyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF6C931ED5D949005B33CD /* epyTests.m */; };
 		18AF6C9F1ED5D949005B33CD /* epyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF6C9E1ED5D949005B33CD /* epyUITests.m */; };
+		18AF6CB51ED5DD31005B33CD /* PYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF6CB31ED5DD31005B33CD /* PYViewController.m */; };
+		18AF6CB61ED5DD31005B33CD /* PYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6CB41ED5DD31005B33CD /* PYViewController.xib */; };
+		18AF6CBB1ED5E0C1005B33CD /* demo001_bj.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6CB81ED5E0C1005B33CD /* demo001_bj.mp3 */; };
+		18AF6CBC1ED5E0C1005B33CD /* demo001_sp.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6CB91ED5E0C1005B33CD /* demo001_sp.mp4 */; };
+		18AF6CBD1ED5E0C1005B33CD /* demo001_zm.srt in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6CBA1ED5E0C1005B33CD /* demo001_zm.srt */; };
+		18AF6CBF1ED5E492005B33CD /* demo001_py.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6CBE1ED5E492005B33CD /* demo001_py.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,13 @@
 		18AF6C9A1ED5D949005B33CD /* epyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = epyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18AF6C9E1ED5D949005B33CD /* epyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = epyUITests.m; sourceTree = "<group>"; };
 		18AF6CA01ED5D949005B33CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18AF6CB21ED5DD31005B33CD /* PYViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYViewController.h; sourceTree = "<group>"; };
+		18AF6CB31ED5DD31005B33CD /* PYViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYViewController.m; sourceTree = "<group>"; };
+		18AF6CB41ED5DD31005B33CD /* PYViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PYViewController.xib; sourceTree = "<group>"; };
+		18AF6CB81ED5E0C1005B33CD /* demo001_bj.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = demo001_bj.mp3; sourceTree = "<group>"; };
+		18AF6CB91ED5E0C1005B33CD /* demo001_sp.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo001_sp.mp4; sourceTree = "<group>"; };
+		18AF6CBA1ED5E0C1005B33CD /* demo001_zm.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demo001_zm.srt; sourceTree = "<group>"; };
+		18AF6CBE1ED5E492005B33CD /* demo001_py.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = demo001_py.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +94,8 @@
 		18AF6C6D1ED5D949005B33CD = {
 			isa = PBXGroup;
 			children = (
+				18AF6CB71ED5E0C1005B33CD /* source */,
+				18AF6CAE1ED5DD0C005B33CD /* dub */,
 				18AF6C781ED5D949005B33CD /* epy */,
 				18AF6C921ED5D949005B33CD /* epyTests */,
 				18AF6C9D1ED5D949005B33CD /* epyUITests */,
@@ -138,6 +153,51 @@
 				18AF6CA01ED5D949005B33CD /* Info.plist */,
 			);
 			path = epyUITests;
+			sourceTree = "<group>";
+		};
+		18AF6CAE1ED5DD0C005B33CD /* dub */ = {
+			isa = PBXGroup;
+			children = (
+				18AF6CAF1ED5DD0C005B33CD /* Controller */,
+				18AF6CB01ED5DD0C005B33CD /* Model */,
+				18AF6CB11ED5DD0C005B33CD /* View */,
+			);
+			path = dub;
+			sourceTree = "<group>";
+		};
+		18AF6CAF1ED5DD0C005B33CD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18AF6CB21ED5DD31005B33CD /* PYViewController.h */,
+				18AF6CB31ED5DD31005B33CD /* PYViewController.m */,
+				18AF6CB41ED5DD31005B33CD /* PYViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		18AF6CB01ED5DD0C005B33CD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18AF6CB11ED5DD0C005B33CD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18AF6CB71ED5E0C1005B33CD /* source */ = {
+			isa = PBXGroup;
+			children = (
+				18AF6CBE1ED5E492005B33CD /* demo001_py.mp3 */,
+				18AF6CB81ED5E0C1005B33CD /* demo001_bj.mp3 */,
+				18AF6CB91ED5E0C1005B33CD /* demo001_sp.mp4 */,
+				18AF6CBA1ED5E0C1005B33CD /* demo001_zm.srt */,
+			);
+			path = source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +267,7 @@
 				TargetAttributes = {
 					18AF6C751ED5D949005B33CD = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 2GT62WCWP4;
 						ProvisioningStyle = Automatic;
 					};
 					18AF6C8E1ED5D949005B33CD = {
@@ -247,8 +308,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				18AF6C891ED5D949005B33CD /* LaunchScreen.storyboard in Resources */,
+				18AF6CBD1ED5E0C1005B33CD /* demo001_zm.srt in Resources */,
+				18AF6CBF1ED5E492005B33CD /* demo001_py.mp3 in Resources */,
+				18AF6CBC1ED5E0C1005B33CD /* demo001_sp.mp4 in Resources */,
+				18AF6CB61ED5DD31005B33CD /* PYViewController.xib in Resources */,
 				18AF6C861ED5D949005B33CD /* Assets.xcassets in Resources */,
 				18AF6C841ED5D949005B33CD /* Main.storyboard in Resources */,
+				18AF6CBB1ED5E0C1005B33CD /* demo001_bj.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18AF6C811ED5D949005B33CD /* ViewController.m in Sources */,
+				18AF6CB51ED5DD31005B33CD /* PYViewController.m in Sources */,
 				18AF6C7E1ED5D949005B33CD /* AppDelegate.m in Sources */,
 				18AF6C7B1ED5D949005B33CD /* main.m in Sources */,
 			);
@@ -426,10 +493,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2GT62WCWP4;
 				INFOPLIST_FILE = epy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mj.epy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -437,10 +507,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2GT62WCWP4;
 				INFOPLIST_FILE = epy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mj.epy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
