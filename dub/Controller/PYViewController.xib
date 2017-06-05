@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +22,7 @@
                     <rect key="frame" x="156" y="378" width="62" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="播放配音"/>
+                    <state key="selected" title="暂停配音"/>
                     <connections>
                         <action selector="playPY:" destination="-1" eventType="touchUpInside" id="N27-zc-pI5"/>
                     </connections>
@@ -31,6 +31,7 @@
                     <rect key="frame" x="156" y="437" width="62" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="播放背景"/>
+                    <state key="selected" title="暂停背景"/>
                     <connections>
                         <action selector="playBJ:" destination="-1" eventType="touchUpInside" id="vZo-xO-UHj"/>
                     </connections>
@@ -39,8 +40,18 @@
                     <rect key="frame" x="156" y="318" width="62" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="播放视频"/>
+                    <state key="selected" title="暂停视频"/>
                     <connections>
                         <action selector="playSP:" destination="-1" eventType="touchUpInside" id="CZS-ib-tMJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXA-vq-73D">
+                    <rect key="frame" x="156" y="495" width="62" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="录音"/>
+                    <state key="selected" title="停止"/>
+                    <connections>
+                        <action selector="record:" destination="-1" eventType="touchUpInside" id="l1C-hl-noi"/>
                     </connections>
                 </button>
             </subviews>
