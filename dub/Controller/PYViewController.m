@@ -32,12 +32,18 @@
 /**真机时使用**/
 @property(nonatomic, strong) AVAudioSession *session;
 
+
+@property (nonatomic ,strong)  id playTimeObserver;
+@property (nonatomic, strong) AVPlayerItem *playerItem;
 @end
 
 @implementation PYViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [self playerItem];
+//    [self spPlayer];
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -76,11 +82,19 @@
     return _pyPlayer;
 }
 
+- (AVPlayerItem *)playerItem {
+    if (_playerItem == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"demo001_sp" ofType:@"mp4"];
+        _playerItem = [[AVPlayerItem alloc] initWithURL:[NSURL fileURLWithPath:path]];
+    }
+    return _playerItem;
+}
+
 - (AVPlayerViewController *)spPlayer {
     if (_spPlayer == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"demo001_sp" ofType:@"mp4"];
+//        NSString *path = [[NSBundle mainBundle] pathForResource:@"demo001_sp" ofType:@"mp4"];
         _spPlayer = [[AVPlayerViewController alloc] init];
-        _spPlayer.player = [[AVPlayer alloc] initWithURL:[NSURL fileURLWithPath:path]];
+        _spPlayer.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
         _spPlayer.view.frame = CGRectMake(0, 0, 400, 300);
         [self.view addSubview:_spPlayer.view];
     }
@@ -123,6 +137,10 @@
     }else{
         [self.spPlayer.player pause];
     }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self monitoringPlayback:_playerItem];
+    });
 }
 - (IBAction)playPY:(id)sender {
     UIButton *btn = sender;
@@ -284,5 +302,24 @@
     }
 }
 
+#pragma mark--视频处理
+// 观察播放进度
+- (void)monitoringPlayback:(AVPlayerItem *)item {
+    __weak typeof(self)WeakSelf = self;
+    
+    // 播放进度, 每秒执行30次， CMTime 为30分之一秒
+    _playTimeObserver = [self.spPlayer.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 30.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+        float currentPlayTime = (double)item.currentTime.value/ item.currentTime.timescale;
+        NSLog(@"当前播放时间:%.1f",currentPlayTime);
+        [WeakSelf handlePlayerTime:currentPlayTime];
+    }];
+}
+
+- (void)handlePlayerTime:(CGFloat)playTime {
+    if (playTime > 10) {
+//        self.playerItem.currentTime.value/self.playerItem.currentTime.timescale+10
+        [self.playerItem seekToTime:CMTimeMakeWithSeconds(5, self.playerItem.currentTime.timescale) toleranceBefore:CMTimeMake(1, self.playerItem.currentTime.timescale) toleranceAfter:CMTimeMake(1, self.playerItem.currentTime.timescale)];
+    }
+}
 
 @end
