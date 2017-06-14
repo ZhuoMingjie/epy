@@ -14,6 +14,7 @@
 #import "lame.h"
 
 #define mp3FileName           @"new.mp3"
+#define mp3hcFileName           @"new_hc.mp3"
 #define synthesisFileName     @"synthesis.mp3"
 #define KFILESIZE (1 * 1024 * 1024)
 
@@ -22,6 +23,9 @@
 @property(nonatomic,retain) AVAudioPlayer *bjPlayer;
 @property(nonatomic,retain) AVAudioPlayer *pyPlayer;
 @property(nonatomic,retain) AVPlayerViewController *spPlayer;
+
+
+@property(nonatomic,retain) AVAudioPlayer *hcPlayer;
 
 @property(nonatomic,retain) AVAudioRecorder *recorder;
 
@@ -35,6 +39,8 @@
 
 @property (nonatomic ,strong)  id playTimeObserver;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
+
+@property (nonatomic,copy) NSString *mp3FilePath;
 @end
 
 @implementation PYViewController
@@ -251,7 +257,7 @@
         [self audio_PCMtoMP3:souceFilePath andDesPath:newFilePath];
         
         //删除录音文件
-        [recorder deleteRecording];
+//        [recorder deleteRecording];
     });
 }
 
@@ -302,6 +308,57 @@
     }
 }
 
+- (void)cafToMp3:(NSString*)cafFileName
+{
+    NSArray *dirPaths;
+    NSString *docsDir;
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+    _mp3FilePath = [docsDir stringByAppendingPathComponent:@"m4atomp3_5.mp3"];
+    
+    @try {
+        int read, write;
+        FILE *pcm = fopen([cafFileName cStringUsingEncoding:1], "rb");
+        FILE *mp3 = fopen([_mp3FilePath cStringUsingEncoding:1], "wb");
+        const int PCM_SIZE = 8192;
+        const int MP3_SIZE = 8192;
+        short int pcm_buffer[PCM_SIZE*2];
+        unsigned char mp3_buffer[MP3_SIZE];
+        
+        lame_t lame = lame_init();
+        lame_set_in_samplerate(lame, 44100);
+        lame_set_VBR(lame, vbr_default);
+        lame_init_params(lame);
+        
+        do {
+            read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+            if (read == 0)
+                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+            else
+                write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+            
+            fwrite(mp3_buffer, write, 1, mp3);
+            
+        } while (read != 0);
+        
+        lame_close(lame);
+        fclose(mp3);
+        fclose(pcm);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",[exception description]);
+    }
+    @finally {
+        //Detrming the size of mp3 file
+        NSFileManager *fileManger = [NSFileManager defaultManager];
+        NSData *data = [fileManger contentsAtPath:_mp3FilePath];
+        NSString* str = [NSString stringWithFormat:@"%d K",[data length]/1024];
+        NSLog(@"size of mp3=%@",str);
+        
+    }
+}
+
 #pragma mark--视频处理
 // 观察播放进度
 - (void)monitoringPlayback:(AVPlayerItem *)item {
@@ -320,6 +377,66 @@
 //        self.playerItem.currentTime.value/self.playerItem.currentTime.timescale+10
         [self.playerItem seekToTime:CMTimeMakeWithSeconds(5, self.playerItem.currentTime.timescale) toleranceBefore:CMTimeMake(1, self.playerItem.currentTime.timescale) toleranceAfter:CMTimeMake(1, self.playerItem.currentTime.timescale)];
     }
+}
+
+- (IBAction)compareAudio:(id)sender {
+//    [self compareAudioTest];
+    [self zhuanhuan];
+}
+
+- (void)zhuanhuan {
+    NSString *auidoPath1 = [[NSBundle mainBundle] pathForResource:@"test" ofType:@""];
+    [self cafToMp3:auidoPath1];
+}
+
+- (void)compareAudioTest {
+    NSString *auidoPath1 = [[NSBundle mainBundle] pathForResource:@"hc001" ofType:@"mp3"];
+
+    NSString *audioPath2 = [[NSBundle mainBundle] pathForResource:@"hc002" ofType:@"mp3"];
+
+    AVURLAsset *audioAsset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:auidoPath1]];
+    AVURLAsset *audioAsset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:audioPath2]];
+    
+    AVMutableComposition *composition = [AVMutableComposition composition];
+    
+    // 音频轨道
+    AVMutableCompositionTrack *audioTrack1 = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:0];
+    AVMutableCompositionTrack *audioTrack2 = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:0];
+    
+    // 音频素材轨道
+    AVAssetTrack *audioAssetTrack1 = [[audioAsset1 tracksWithMediaType:AVMediaTypeAudio] firstObject];
+    AVAssetTrack *audioAssetTrack2 = [[audioAsset2 tracksWithMediaType:AVMediaTypeAudio] firstObject];
+    
+    // 音频合并 - 插入音轨文件
+    [audioTrack1 insertTimeRange:CMTimeRangeMake(kCMTimeZero, CMTimeAdd(audioAsset1.duration, audioAsset2.duration)) ofTrack:audioAssetTrack1 atTime:kCMTimeZero error:nil];
+    [audioTrack2 insertTimeRange:CMTimeRangeMake(kCMTimeZero, CMTimeAdd(audioAsset1.duration, audioAsset2.duration)) ofTrack:audioAssetTrack2 atTime:audioAsset1.duration error:nil];
+ 
+    
+    // 合并后的文件导出 - 音频文件目前只找到合成m4a类型的
+    AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:composition presetName:AVAssetExportPresetAppleM4A];
+    NSString *outPutFilePath = [[self.filePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"008.m4a"];
+    session.outputURL = [NSURL fileURLWithPath:outPutFilePath];
+    session.outputFileType = AVFileTypeAppleM4A;
+    [session exportAsynchronouslyWithCompletionHandler:^{
+
+//        NSString *newFilePath = [self.filePath stringByAppendingPathComponent:mp3hcFileName];
+//        
+//        //开启子线程转换文件
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            
+//            //转换格式
+//            [self audio_PCMtoMP3:outPutFilePath andDesPath:newFilePath];
+//            NSLog(@"转换完成----%@", newFilePath);
+//        });
+        
+        [self cafToMp3:outPutFilePath];
+        
+//        NSLog(@"合并完成----%@", outPutFilePath);
+//        self.hcPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:outPutFilePath] error:nil];
+//        [self.hcPlayer play];
+    }];
+
+
 }
 
 @end

@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "dub/Controller/PYViewController.m"
-            timestampString = "518518717.170387"
+            timestampString = "518859817.098545"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
-            landmarkName = "-audioRecorderDidFinishRecording:successfully:"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
+            landmarkName = "-zhuanhuan"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
